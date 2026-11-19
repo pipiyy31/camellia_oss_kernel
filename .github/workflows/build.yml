@@ -24,8 +24,7 @@ jobs:
         run: |
           mkdir -p toolchain
           cd toolchain
-          wget -q https://googlesource.com
-          mkdir clang && tar -xzf clang-r416183b.tar.gz -C clang
+          git clone --depth=1 https://gitlab.com clang
           git clone --depth=1 https://github.com gcc64
           git clone --depth=1 https://github.com gcc32
 
@@ -35,7 +34,7 @@ jobs:
           export SUBARCH=arm64
           export PATH="$PWD/toolchain/clang/bin:$PWD/toolchain/gcc64/bin:$PWD/toolchain/gcc32/bin:$PATH"
           
-          make O=out ARCH=arm64 camellia_defconfig
+          make O=out ARCH=arm64 camellian_defconfig
           make -j$(nproc) O=out ARCH=arm64 \
             CC=clang \
             CLANG_TRIPLE=aarch64-linux-gnu- \
